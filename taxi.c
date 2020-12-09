@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+void move();
 /*
 * This program is responsible of ride serving
 */
@@ -17,4 +18,8 @@ int main(){
 	// 			notify master - return to 1
 	//     else
 	//			return to 2.1
+}
+
+void move(){
+
 }

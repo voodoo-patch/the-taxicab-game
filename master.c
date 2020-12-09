@@ -8,6 +8,8 @@
 * This program represents the master process that spawns and orchestrates
 * taxi processes by assigning rides and managing resources (avilability, starvation, deadlock, ecc)
 */
+
+void cleanup();
 int main(){
 
 	int opts = 0;
@@ -28,7 +30,32 @@ int main(){
 	} else {
 		// error branch
 		printf("Fork error");
+		atexit(cleanup);
+		exit(EXIT_FAILURE);
 	}
 
+
+// WEXITSTATUS(existatus) -> shifts status code by 8 bits to the right
+/*
+	waitpid(-1, &status, WNOHANG | WUNTRACED | WCONTINUED);
+	if(WIFEXITED(status)){
+		// normal termination
+		int actualStatus = WEXITSTATUS(exitstatus);
+	} else if(WIFSIGNALED(status)){
+		// process killed by signal (sigterm, sigkill, ...)
+		int actualStatus = WTERMSIG(exitstatus); // sig number that caused termination
+	} else if(WIFSTOPPED(status)){
+		// process stopped by signal (sigstop, ...)
+		int actualStatus = WSTOPSIG(exitstatus); // sig number that blocked the process
+	} else if(WIFCONTINUED(status)){
+		// process waked by SIGCONT signal
+	}
+*/
+	// not called if interrupted (SIGINT, SIGKILL)
+	atexit(cleanup);
 	exit(EXIT_SUCCESS);
+}
+
+void cleanup(){
+	// free memory, close socket, ecc
 }
