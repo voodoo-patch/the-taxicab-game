@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#import "configuration.c"
+#include "configuration.h"
 
-void print_config(configuration *config){
+void config_print(configuration *config){
 	printf("CONFIGURATION READ:\n");
 	printf("\nSO_WIDTH: %u", config->SO_WIDTH);
 	printf("\nSO_HEIGHT: %u", config->SO_HEIGHT);
@@ -15,7 +15,7 @@ void print_config(configuration *config){
 	printf("\nSO_SOURCES: %u", config->SO_SOURCES);
 	printf("\nSO_TIMEOUT: %u", config->SO_TIMEOUT);
 	printf("\nSO_TOP_CELLS: %u", config->SO_TOP_CELLS);
-	printf("\nSO_TAXI: %u", config->SO_TAXI);
+	printf("\nSO_TAXI: %u\n", config->SO_TAXI);
 }
 
 configuration config_set(configuration * config, char * key, unsigned int value){	
@@ -41,8 +41,6 @@ configuration config_set(configuration * config, char * key, unsigned int value)
 		config->SO_TOP_CELLS = value;
 	} else if(strcmp(key, "SO_TAXI") == 0){
 		config->SO_TAXI = value;
-	} else {
-		printf("Invalid config key: %s", key);
 	}	
 
 	return *config;

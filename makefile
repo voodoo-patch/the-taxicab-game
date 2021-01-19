@@ -1,8 +1,15 @@
+CCFLAGS=-std=c89 -pedantic
+ODIR=obj
+CONF=config.txt
+
 build: 
-	gcc -o master master.c
+	gcc -o $(ODIR)/master.o master.c $(CCFLAGS) 
 run:
-	./master
+	./master.o
+ensure-config:
+	gcc -o $(ODIR)/setconf.o set-configuration.c configuration.c $(CCFLAGS) && \
+	./$(ODIR)/setconf.o $(CONF)
 new-ride:
-	./new-ride
+	./new-ride.o
 clean: 
-	rm *.o
+	rm -f $(ODIR)/*.o *~ 
